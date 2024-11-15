@@ -12,14 +12,16 @@ public class HelloController {
     private AnchorPane AnchorPane;
     private IMatrix matrix;
     private IMatrix matrixBeforeDecoration;
+    private RenumberDecorator decorator;
 
     @FXML
     protected void onDefaultCreateButtonClick() {
         System.out.println();
         AnchorPane.getChildren().clear();
-        matrix = new OrdinaryMatrix(5, 5);
-        matrixBeforeDecoration = matrix;
-        MatrixInitializer.fillMatrix(matrix, 15, 10);
+        matrix = new OrdinaryMatrix(3, 3);
+        MatrixInitializer.fillMatrix(matrix, 5, 10);
+        matrixBeforeDecoration = new OrdinaryMatrix(matrix);
+
         matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
     }
@@ -28,9 +30,10 @@ public class HelloController {
     protected void onSparseCreateMatrixClick() {
         System.out.println();
         AnchorPane.getChildren().clear();
-        matrix = new SparseMatrix(5, 5);
-        matrixBeforeDecoration = matrix;
-        MatrixInitializer.fillMatrix(matrix, 15, 10);
+        matrix = new SparseMatrix(3, 3);
+        MatrixInitializer.fillMatrix(matrix, 5, 10);
+        matrixBeforeDecoration = new SparseMatrix(matrix);
+
         matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
     }
@@ -49,7 +52,7 @@ public class HelloController {
     protected void renumber() {
         AnchorPane.getChildren().clear();
         if (matrix != null) {
-            RenumberDecorator decorator = new RenumberDecorator(matrix);
+            decorator = new RenumberDecorator(matrix);
             decorator.renumber();
             matrix = decorator;
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
@@ -61,7 +64,12 @@ public class HelloController {
     @FXML
     protected void refresh() {
         AnchorPane.getChildren().clear();
-        matrix = matrixBeforeDecoration;
+
+        matrix = decorator.getOriginalMatrix();
+        if (decorator.getOriginalMatrix().getClass() == RenumberDecorator.class) {
+            decorator = (RenumberDecorator) decorator.getOriginalMatrix();
+        }
+
         if (matrix != null) {
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
             System.out.println();

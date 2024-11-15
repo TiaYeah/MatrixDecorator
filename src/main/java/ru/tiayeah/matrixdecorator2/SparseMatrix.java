@@ -4,6 +4,11 @@ public class SparseMatrix extends AbstractMatrix {
 
     public SparseMatrix(int rowCount, int colCount) {
         super(rowCount, colCount);
+        color = Colors.GREEN;
+    }
+
+    public SparseMatrix(IMatrix sparseMatrix) {
+        super(sparseMatrix);
     }
 
     @Override
@@ -11,19 +16,18 @@ public class SparseMatrix extends AbstractMatrix {
         return new SparseVector(colCount);
     }
 
+
     @Override
-    public void draw(IDrawer drawer, boolean showBroder) {
-        if (showBroder) {
-            drawer.drawBorder(this);
+    public void drawCell(IDrawer drawer, int i, int j, int value) {
+        if (value != 0) {
+            drawer.drawCell(value, i, j, this);
         }
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < rows[i].getSize(); j++) {
-                if (rows[i].getValue(j) != 0) {
-                    drawer.drawCell(rows[i].getValue(j), i , j, this);
-                }
-            }
-            //drawer.drawRow(i, rows[i]);
+    }
+
+    @Override
+    public void fillCell(IDrawer drawer, int i, int j, int value) {
+        if (value != 0) {
+            drawer.fillCell(i, j, color);
         }
-        drawer.printResult();
     }
 }
