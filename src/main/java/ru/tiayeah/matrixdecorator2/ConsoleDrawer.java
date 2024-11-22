@@ -9,7 +9,7 @@ public class ConsoleDrawer implements IDrawer {
     private boolean drawBorder = false;
 
     @Override
-    public void drawCell(int value, int y, int x, IMatrix matrix) {
+    public void drawCell(int value, int y, int x, IMatrix matrix, int offsetX, int offsetY) {
         if (matrixToPrint == null) {
             matrixToPrint = new ArrayList<>();
             for (int i = 0; i < matrix.getRows() * 2 + 1; i++) {
@@ -64,7 +64,7 @@ public class ConsoleDrawer implements IDrawer {
     }
 
     @Override
-    public void fillCell(int i, int j, Colors color) {
+    public void fillCell(int i, int j, Colors color, int offsetX, int offsetY) {
 
     }
 

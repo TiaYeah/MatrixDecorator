@@ -9,9 +9,7 @@ public interface IMatrix {
 
     void setValue(int row, int col, int value);
 
-    void draw(IDrawer drawer, boolean showBorder);
+    void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY);
 
-    void drawCell(IDrawer drawer, int i, int j, int value);
-
-    void fillCell(IDrawer drawer, int i, int j, int value);
+    IMatrix getComponent();
 }

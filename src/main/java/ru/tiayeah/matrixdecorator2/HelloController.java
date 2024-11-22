@@ -11,7 +11,7 @@ public class HelloController {
     @FXML
     private AnchorPane AnchorPane;
     private IMatrix matrix;
-    private IMatrix matrixBeforeDecoration;
+    private IMatrix save;
     private RenumberDecorator decorator;
 
     @FXML
@@ -20,10 +20,9 @@ public class HelloController {
         AnchorPane.getChildren().clear();
         matrix = new OrdinaryMatrix(3, 3);
         MatrixInitializer.fillMatrix(matrix, 5, 10);
-        matrixBeforeDecoration = new OrdinaryMatrix(matrix);
 
-        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
-        matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
+        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+        matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
     }
 
     @FXML
@@ -32,19 +31,36 @@ public class HelloController {
         AnchorPane.getChildren().clear();
         matrix = new SparseMatrix(3, 3);
         MatrixInitializer.fillMatrix(matrix, 5, 10);
-        matrixBeforeDecoration = new SparseMatrix(matrix);
 
-        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
-        matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
+        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+        matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
+    }
+
+    @FXML
+    protected void onHorizontalGroupClick() {
+        System.out.println();
+        AnchorPane.getChildren().clear();
+        HorizontalMatrixGroup matrix = new HorizontalMatrixGroup();
+
+        IMatrix matrix1 = new OrdinaryMatrix(4, 4);
+        MatrixInitializer.fillMatrix(matrix1, 10, 10);
+        IMatrix matrix2 = new OrdinaryMatrix(3, 3);
+        MatrixInitializer.fillMatrix(matrix2, 5, 10);
+
+        matrix.addMatrix(matrix1);
+        matrix.addMatrix(matrix2);
+
+        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(),0 ,0);
+        matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, 0);
     }
 
     @FXML
     protected void onCheckBoxClick() {
         AnchorPane.getChildren().clear();
         if (matrix != null) {
-            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
+            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
-            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
+            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 
@@ -52,12 +68,14 @@ public class HelloController {
     protected void renumber() {
         AnchorPane.getChildren().clear();
         if (matrix != null) {
+            save = matrix;
+
             decorator = new RenumberDecorator(matrix);
             decorator.renumber();
             matrix = decorator;
-            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
+            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
-            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
+            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 
@@ -65,15 +83,12 @@ public class HelloController {
     protected void refresh() {
         AnchorPane.getChildren().clear();
 
-        matrix = decorator.getOriginalMatrix();
-        if (decorator.getOriginalMatrix().getClass() == RenumberDecorator.class) {
-            decorator = (RenumberDecorator) decorator.getOriginalMatrix();
-        }
-
+        //matrix = decorator.getComponent();
+        matrix = save;
         if (matrix != null) {
-            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected());
+            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
-            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected());
+            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 }

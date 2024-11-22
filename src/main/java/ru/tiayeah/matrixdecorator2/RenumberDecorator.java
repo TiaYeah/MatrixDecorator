@@ -41,9 +41,11 @@ public class RenumberDecorator implements IMatrix {
             row2 = rand.nextInt(rows);
         }
 
-        int temp = rowIndex[row1];
-        rowIndex[row1] = rowIndex[row2];
-        rowIndex[row2] = temp;
+        for (int i = 0; i < matrix.getCols(); i++) {
+            int tmp = matrix.getValue(row1, i);
+            matrix.setValue(row1, i, matrix.getValue(row2, i));
+            matrix.setValue(row2, i, tmp);
+        }
 
         int col1 = rand.nextInt(cols);
         int col2 = rand.nextInt(cols);
@@ -51,50 +53,45 @@ public class RenumberDecorator implements IMatrix {
             col2 = rand.nextInt(cols);
         }
 
-        temp = colIndex[col1];
-        colIndex[col1] = colIndex[col2];
-        colIndex[col2] = temp;
+        for (int i = 0; i < matrix.getRows(); i++) {
+            int tmp = matrix.getValue(i, col1);
+            matrix.setValue(i, col1, matrix.getValue(i, col2));
+            matrix.setValue(i, col2, tmp);
+        }
 
         System.out.println("Поменялись " + (row1 + 1) + " и " + (row2 + 1)+ " строки");
         System.out.println("Поменялись " + (col1 + 1) + " и " + (col2 + 1) + " столбцы");
     }
 
-    public IMatrix getOriginalMatrix() {
-        return matrix;
-    }
-
     @Override
     public int getValue(int row, int col) {
-        return matrix.getValue(rowIndex[row], colIndex[col]);
+        return matrix.getValue(row, col);
     }
 
     @Override
     public void setValue(int row, int col, int value) {
-        matrix.setValue(rowIndex[row], colIndex[col], value);
+        matrix.setValue(row, col, value);
     }
 
     @Override
-    public void draw(IDrawer drawer, boolean showBorder) {
-        if (showBorder) {
-            drawer.drawBorder(this);
-        }
-        for (int i = 0; i < matrix.getRows(); i++) {
-            for (int j = 0; j < matrix.getCols(); j++) {
-                fillCell(drawer, i, j, getValue(i,j));
-                drawCell(drawer, i, j, getValue(i,j));
-            }
-        }
-        drawer.printResult();
+    public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
+        matrix.draw(drawer, showBorder, offsetX, offsetY);
+//        if (showBorder) {
+//            drawer.drawBorder(this);
+//        }
+//        for (int i = 0; i < matrix.getRows(); i++) {
+//            for (int j = 0; j < matrix.getCols(); j++) {
+//                fillCell(drawer, i, j, getValue(i,j));
+//                drawCell(drawer, i, j, getValue(i,j));
+//            }
+//        }
+//        drawer.printResult();
     }
 
-    @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value) {
-        matrix.drawCell(drawer, i, j, value);
-    }
 
     @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value) {
-        matrix.fillCell(drawer, i, j, value);
+    public IMatrix getComponent() {
+        return matrix.getComponent();
     }
 
     public void print() {

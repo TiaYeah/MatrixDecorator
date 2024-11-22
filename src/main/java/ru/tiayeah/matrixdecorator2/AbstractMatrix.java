@@ -53,19 +53,13 @@ public abstract class AbstractMatrix implements IMatrix {
         return colCount;
     }
 
+
+
     @Override
-    public void draw(IDrawer drawer, boolean showBroder) {
-        if (showBroder) {
-            drawer.drawBorder(this);
-        }
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < rows[i].getSize(); j++) {
-                fillCell(drawer, i, j, rows[i].getValue(j));
-                drawCell(drawer, i, j, rows[i].getValue(j));
-            }
-        }
-        drawer.printResult();
+    public IMatrix getComponent() {
+        return this;
     }
+
 
     @Override
     public String toString() {
@@ -73,4 +67,5 @@ public abstract class AbstractMatrix implements IMatrix {
                 "rows=" + Arrays.toString(rows) +
                 '}';
     }
+
 }

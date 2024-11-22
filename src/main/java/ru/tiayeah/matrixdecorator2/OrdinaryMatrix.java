@@ -18,12 +18,16 @@ public class OrdinaryMatrix extends AbstractMatrix {
 
 
     @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value) {
-        drawer.drawCell(value, i, j, this);
-    }
-
-    @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value) {
-        drawer.fillCell(i, j, color);
+    public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
+        if (showBorder) {
+            drawer.drawBorder(this);
+        }
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) {
+                drawer.fillCell(i, j, color, offsetX, offsetY);
+                drawer.drawCell(getValue(i, j), i, j, this, offsetX, offsetY);
+            }
+        }
+        drawer.printResult();
     }
 }

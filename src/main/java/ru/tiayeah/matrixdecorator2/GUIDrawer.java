@@ -17,10 +17,10 @@ public class GUIDrawer implements IDrawer {
 
 
     @Override
-    public void drawCell(int value, int y, int x, IMatrix matrix) {
+    public void drawCell(int value, int y, int x, IMatrix matrix, int offsetX, int offsetY) {
         int baseMarginX = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinX();
         int baseMarginY = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinY() + 20;
-        Text text = new Text(baseMarginX + 30 * x, baseMarginY + 30 * y, Integer.toString(value));
+        Text text = new Text(baseMarginX + 30 * offsetX + 30 * x, baseMarginY + 30 * offsetY + 30 * y, Integer.toString(value));
         text.setFont(new Font(25));
         anchorPane.getChildren().add(text);
     }
@@ -50,10 +50,10 @@ public class GUIDrawer implements IDrawer {
     }
 
     @Override
-    public void fillCell(int i, int j, Colors color) {
+    public void fillCell(int i, int j, Colors color, int offsetX, int offsetY) {
         int baseMarginX = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinX() - 10;
         int baseMarginY = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinY() - 10;
-        Rectangle rect = new Rectangle(baseMarginX + 30 * j + 2, baseMarginY + 30 * i + 5, 30, 30);
+        Rectangle rect = new Rectangle(baseMarginX + 30 * offsetX + 30 * j + 2, baseMarginY + 30 * offsetY + 30 * i + 5, 30, 30);
         rect.setFill(Paint.valueOf(color.toString()));
         anchorPane.getChildren().add(rect);
     }
