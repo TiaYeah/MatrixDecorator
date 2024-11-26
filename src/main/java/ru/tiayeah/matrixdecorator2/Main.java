@@ -23,9 +23,9 @@ public class Main {
         System.out.println(ordinaryMatrix);
         //System.out.println(sparseMatrix);
 
-        RenumberDecorator decoratedMatrix = new RenumberDecorator(ordinaryMatrix);
-        decoratedMatrix.renumber();
-        decoratedMatrix.print();
+        //RenumberDecorator decoratedMatrix = new RenumberDecorator(ordinaryMatrix);
+        //decoratedMatrix.renumber();
+        //decoratedMatrix.print();
 
 
         Main main = new Main();

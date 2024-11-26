@@ -18,18 +18,17 @@ public class SparseMatrix extends AbstractMatrix {
 
 
     @Override
-    public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
-        if (showBorder) {
-            drawer.drawBorder(this);
+    public void drawCell(IDrawer drawer, int i, int j, int value) {
+        if (value != 0) {
+            drawer.drawCell(value, i, j, this,0,0);
         }
-        for (int i = 0; i < rowCount; i++) {
-            for (int j = 0; j < colCount; j++) {
-                if (getValue(i, j) != 0) {
-                    drawer.fillCell(i, j, color, offsetX, offsetY);
-                    drawer.drawCell(getValue(i, j), i, j, this, offsetX, offsetY);
-                }
-            }
+
+    }
+
+    @Override
+    public void fillCell(IDrawer drawer, int i, int j, int value) {
+        if (value!= 0) {
+            drawer.fillCell(i, j, color, 0, 0);
         }
-        drawer.printResult();
     }
 }

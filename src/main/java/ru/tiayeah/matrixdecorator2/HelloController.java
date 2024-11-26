@@ -10,16 +10,17 @@ public class HelloController {
     private CheckBox BorderCheckbox;
     @FXML
     private AnchorPane AnchorPane;
-    private IMatrix matrix;
-    private IMatrix save;
-    private RenumberDecorator decorator;
+    private IPrintableMatrix matrix;
+    private AMatrixDecorator decorator;
+    private TransposeDecorator transposeDecorator;
+    private int rowCount = 5, colCount = 5;
 
     @FXML
     protected void onDefaultCreateButtonClick() {
         System.out.println();
         AnchorPane.getChildren().clear();
-        matrix = new OrdinaryMatrix(3, 3);
-        MatrixInitializer.fillMatrix(matrix, 5, 10);
+        matrix = new OrdinaryMatrix(rowCount, colCount);
+        MatrixInitializer.fillMatrix(matrix, 15, 10);
 
         matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
@@ -29,8 +30,8 @@ public class HelloController {
     protected void onSparseCreateMatrixClick() {
         System.out.println();
         AnchorPane.getChildren().clear();
-        matrix = new SparseMatrix(3, 3);
-        MatrixInitializer.fillMatrix(matrix, 5, 10);
+        matrix = new SparseMatrix(rowCount, colCount);
+        MatrixInitializer.fillMatrix(matrix, 15, 10);
 
         matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
@@ -68,11 +69,12 @@ public class HelloController {
     protected void renumber() {
         AnchorPane.getChildren().clear();
         if (matrix != null) {
-            save = matrix;
-
-            decorator = new RenumberDecorator(matrix);
-            decorator.renumber();
+//            decorator = new RenumberDecorator(matrix);
+//            decorator.renumber();
+//            matrix = decorator;
+            decorator = new TransposeDecorator(matrix);
             matrix = decorator;
+
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
             matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
@@ -83,8 +85,8 @@ public class HelloController {
     protected void refresh() {
         AnchorPane.getChildren().clear();
 
-        //matrix = decorator.getComponent();
-        matrix = save;
+        matrix = (IPrintableMatrix) decorator.getComponent();
+
         if (matrix != null) {
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();

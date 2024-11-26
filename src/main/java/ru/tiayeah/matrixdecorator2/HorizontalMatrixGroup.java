@@ -3,28 +3,28 @@ package ru.tiayeah.matrixdecorator2;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HorizontalMatrixGroup implements IMatrix {
-    private List<IMatrix> matrixList = new ArrayList<IMatrix>();
+public class HorizontalMatrixGroup implements IPrintableMatrix {
+    private List<IPrintableMatrix> matrixList = new ArrayList<IMatrix>();
 
 
-    public void addMatrix(IMatrix matrix) {
+    public void addMatrix(IPrintableMatrix matrix) {
         matrixList.add(matrix);
     }
 
     @Override
     public int getRows() {
-        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IMatrix::getRows).max().getAsInt();
+        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IPrintableMatrix::getRows).max().getAsInt();
     }
 
     @Override
     public int getCols() {
-        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IMatrix::getCols).sum();
+        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IPrintableMatrix::getCols).sum();
     }
 
     @Override
     public int getValue(int row, int col) {
         int currentCol = 0;
-        for (IMatrix matrix : matrixList) {
+        for (IPrintableMatrix matrix : matrixList) {
             if (col < currentCol + matrix.getCols()) {
                 return matrix.getValue(row, col - currentCol);
             }
@@ -36,7 +36,7 @@ public class HorizontalMatrixGroup implements IMatrix {
     @Override
     public void setValue(int row, int col, int value) {
         int currentCol = 0;
-        for (IMatrix matrix : matrixList) {
+        for (IPrintableMatrix matrix : matrixList) {
             if (col < currentCol + matrix.getCols()) {
                 matrix.setValue(row, col - currentCol, value);
                 return;
@@ -56,13 +56,24 @@ public class HorizontalMatrixGroup implements IMatrix {
             if (i != 0) {
                 matrixOffsetX += matrixList.get(i - 1).getCols();
             }
-            matrixList.get(i).draw(drawer, false, matrixOffsetX, offsetY);
+            matrixList.get(i).fillCell(drawer, matrixOffsetX, offsetY);
         }
         drawer.printResult();
+
     }
 
     @Override
     public IMatrix getComponent() {
-        return null;
+        return this;
+    }
+
+    @Override
+    public void drawCell(IDrawer drawer, int i, int j, int value) {
+
+    }
+
+    @Override
+    public void fillCell(IDrawer drawer, int i, int j, int value) {
+
     }
 }

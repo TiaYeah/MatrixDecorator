@@ -2,7 +2,7 @@ package ru.tiayeah.matrixdecorator2;
 
 import java.util.Arrays;
 
-public abstract class AbstractMatrix implements IMatrix {
+public abstract class AbstractMatrix implements IPrintableMatrix {
     protected int rowCount;
     protected int colCount;
     protected IVector[] rows;
@@ -68,4 +68,17 @@ public abstract class AbstractMatrix implements IMatrix {
                 '}';
     }
 
+    @Override
+    public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
+        if (showBorder) {
+            drawer.drawBorder(this);
+        }
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) {
+                fillCell(drawer, i, j, getValue(i, j));
+                drawCell(drawer, i, j, getValue(i, j));
+            }
+        }
+        drawer.printResult();
+    }
 }
