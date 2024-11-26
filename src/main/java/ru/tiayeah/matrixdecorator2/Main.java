@@ -1,5 +1,12 @@
 package ru.tiayeah.matrixdecorator2;
 
+import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
+import ru.tiayeah.matrixdecorator2.interfaces.IVector;
+import ru.tiayeah.matrixdecorator2.matrixImpl.MatrixInitializer;
+import ru.tiayeah.matrixdecorator2.matrixImpl.OrdinaryMatrix;
+import ru.tiayeah.matrixdecorator2.matrixImpl.SparseMatrix;
+import ru.tiayeah.matrixdecorator2.vectorImpl.SparseVector;
+
 import java.util.Scanner;
 
 public class Main {

@@ -1,4 +1,6 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.interfaces;
+
+import ru.tiayeah.matrixdecorator2.Colors;
 
 public interface IDrawer {
     void drawCell(int value, int i, int j, IMatrix matrix, int offsetX, int offsetY);

@@ -1,4 +1,6 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.matrixImpl;
+
+import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
 
 class MatrixStatistics {
     private int sum;

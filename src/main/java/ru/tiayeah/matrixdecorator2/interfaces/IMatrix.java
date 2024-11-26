@@ -1,4 +1,4 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.interfaces;
 
 public interface IMatrix {
     int getRows();

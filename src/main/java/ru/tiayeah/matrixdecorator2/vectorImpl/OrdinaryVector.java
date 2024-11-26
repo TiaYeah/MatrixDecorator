@@ -1,4 +1,6 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.vectorImpl;
+
+import ru.tiayeah.matrixdecorator2.interfaces.IVector;
 
 import java.util.Arrays;
 

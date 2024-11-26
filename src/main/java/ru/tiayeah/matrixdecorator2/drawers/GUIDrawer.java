@@ -1,4 +1,4 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.drawers;
 
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Paint;
@@ -6,6 +6,9 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import ru.tiayeah.matrixdecorator2.Colors;
+import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
+import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
 
 public class GUIDrawer implements IDrawer {
     private AnchorPane anchorPane;

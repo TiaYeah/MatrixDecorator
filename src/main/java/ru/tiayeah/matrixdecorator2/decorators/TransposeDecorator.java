@@ -1,4 +1,7 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.decorators;
+
+import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
+import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 
 public class TransposeDecorator extends AMatrixDecorator {
 

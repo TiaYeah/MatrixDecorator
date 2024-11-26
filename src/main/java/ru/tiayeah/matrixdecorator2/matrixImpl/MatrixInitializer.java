@@ -1,4 +1,6 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.matrixImpl;
+
+import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
 
 import java.util.Random;
 

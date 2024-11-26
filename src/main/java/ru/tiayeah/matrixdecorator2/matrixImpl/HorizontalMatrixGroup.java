@@ -1,10 +1,14 @@
-package ru.tiayeah.matrixdecorator2;
+package ru.tiayeah.matrixdecorator2.matrixImpl;
+
+import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
+import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
+import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HorizontalMatrixGroup implements IPrintableMatrix {
-    private List<IPrintableMatrix> matrixList = new ArrayList<IMatrix>();
+    private List<IPrintableMatrix> matrixList = new ArrayList<>();
 
 
     public void addMatrix(IPrintableMatrix matrix) {
@@ -56,7 +60,8 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
             if (i != 0) {
                 matrixOffsetX += matrixList.get(i - 1).getCols();
             }
-            matrixList.get(i).fillCell(drawer, matrixOffsetX, offsetY);
+            //matrixList.get(i).fillCell(drawer, matrixOffsetX, offsetY);
+
         }
         drawer.printResult();
 

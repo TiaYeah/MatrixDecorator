@@ -1,9 +1,19 @@
 package ru.tiayeah.matrixdecorator2;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
+import ru.tiayeah.matrixdecorator2.decorators.AMatrixDecorator;
+import ru.tiayeah.matrixdecorator2.decorators.TransposeDecorator;
+import ru.tiayeah.matrixdecorator2.drawers.ConsoleDrawer;
+import ru.tiayeah.matrixdecorator2.drawers.GUIDrawer;
+import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
+import ru.tiayeah.matrixdecorator2.interfaces.IPrintable;
+import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
+import ru.tiayeah.matrixdecorator2.matrixImpl.HorizontalMatrixGroup;
+import ru.tiayeah.matrixdecorator2.matrixImpl.MatrixInitializer;
+import ru.tiayeah.matrixdecorator2.matrixImpl.OrdinaryMatrix;
+import ru.tiayeah.matrixdecorator2.matrixImpl.SparseMatrix;
 
 public class HelloController {
     @FXML
@@ -43,9 +53,9 @@ public class HelloController {
         AnchorPane.getChildren().clear();
         HorizontalMatrixGroup matrix = new HorizontalMatrixGroup();
 
-        IMatrix matrix1 = new OrdinaryMatrix(4, 4);
+        IPrintableMatrix matrix1 = new OrdinaryMatrix(4, 4);
         MatrixInitializer.fillMatrix(matrix1, 10, 10);
-        IMatrix matrix2 = new OrdinaryMatrix(3, 3);
+        IPrintableMatrix matrix2 = new OrdinaryMatrix(3, 3);
         MatrixInitializer.fillMatrix(matrix2, 5, 10);
 
         matrix.addMatrix(matrix1);
