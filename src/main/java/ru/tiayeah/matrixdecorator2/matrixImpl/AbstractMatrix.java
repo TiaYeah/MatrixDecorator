@@ -81,8 +81,8 @@ public abstract class AbstractMatrix implements IPrintableMatrix {
         }
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < colCount; j++) {
-                fillCell(drawer, i, j, getValue(i, j));
-                drawCell(drawer, i, j, getValue(i, j));
+                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
             }
         }
         drawer.printResult();

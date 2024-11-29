@@ -24,17 +24,17 @@ public class SparseMatrix extends AbstractMatrix {
 
 
     @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value) {
+    public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         if (value != 0) {
-            drawer.drawCell(value, i, j, this,0,0);
+            drawer.drawCell(value, i, j, this, offsetX, offsetY);
         }
 
     }
 
     @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value) {
+    public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         if (value!= 0) {
-            drawer.fillCell(i, j, color, 0, 0);
+            drawer.fillCell(i, j, color, offsetX, offsetY);
         }
     }
 }

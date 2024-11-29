@@ -15,6 +15,11 @@ public class Main {
         for (int i = 0; i < 5; i++) {
             vector.setValue(i, i);
         }
+        double a = 2.01;
+        int b = (int) a;
+
+        System.out.println(b);
+
         vector.setValue(4, 12);
         System.out.println(vector);
 

@@ -1,4 +1,4 @@
-package ru.tiayeah.matrixdecorator2.matrixImpl;
+package ru.tiayeah.matrixdecorator2.decorators;
 
 import ru.tiayeah.matrixdecorator2.Colors;
 import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
@@ -8,9 +8,15 @@ import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HorizontalMatrixGroup implements IPrintableMatrix {
+public class VerticalGroupDecorator implements IPrintableMatrix {
     private List<IPrintableMatrix> matrixList = new ArrayList<>();
 
+    public VerticalGroupDecorator() {
+    }
+
+    public VerticalGroupDecorator(List<IPrintableMatrix> matrixList) {
+        this.matrixList = matrixList;
+    }
 
     public void addMatrix(IPrintableMatrix matrix) {
         matrixList.add(matrix);
@@ -18,38 +24,38 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
 
     @Override
     public int getRows() {
-        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IPrintableMatrix::getRows).max().getAsInt();
+        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IPrintableMatrix::getRows).sum();
     }
 
     @Override
     public int getCols() {
-        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IPrintableMatrix::getCols).sum();
+        return matrixList.isEmpty() ? 0 : matrixList.stream().mapToInt(IPrintableMatrix::getCols).max().getAsInt();
     }
 
     @Override
     public int getValue(int row, int col) {
-        int currentCol = 0;
+        int currentRow = 0;
         for (IPrintableMatrix matrix : matrixList) {
-            if (col < currentCol + matrix.getCols()) {
-                if (row >= matrix.getRows()) {
+            if (row < currentRow + matrix.getRows()) {
+                if (col >= matrix.getCols()) {
                     return 0;
                 }
-                return matrix.getValue(row, col - currentCol);
+                return matrix.getValue(row - currentRow, col);
             }
-            currentCol += matrix.getCols();
+            currentRow += matrix.getRows();
         }
         throw new IndexOutOfBoundsException("Индекс выходит за пределы матрицы");
     }
 
     @Override
     public void setValue(int row, int col, int value) {
-        int currentCol = 0;
+        int currentRow = 0;
         for (IPrintableMatrix matrix : matrixList) {
-            if (col < currentCol + matrix.getCols()) {
-                matrix.setValue(row, col - currentCol, value);
+            if (row < currentRow + matrix.getRows()) {
+                matrix.setValue(row - currentRow, col, value);
                 return;
             }
-            currentCol += matrix.getCols();
+            currentRow += matrix.getRows();
         }
         throw new IndexOutOfBoundsException("Индекс выходит за пределы матрицы");
     }
@@ -59,7 +65,6 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
         if (showBorder) {
             drawer.drawBorder(this);
         }
-        int matrixOffsetX = offsetX;
 //        for (int i = 0; i < matrixList.size(); i++) {
 //            if (i != 0) {
 //                matrixOffsetX += matrixList.get(i - 1).getCols();
@@ -72,6 +77,8 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
 //            }
 //
 //        }
+        System.out.println(matrixList.size());
+        System.out.println(getRows() + " " + getCols());
 
         for (int i = 0; i < getRows(); i++) {
             for (int j = 0; j < getCols(); j++) {
@@ -94,27 +101,15 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
         boolean isTranspose = i >= getRows();
 
         for (IPrintableMatrix matrix : matrixList) {
-            if (!isTranspose) {
-                if (j < currentCol + matrix.getCols()) {
-                    if (i >= matrix.getRows()) {
-                        drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                        return;
-                    }
-                    matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
+            if (i < currentCol + matrix.getRows()) {
+                if (j >= matrix.getCols()) {
+                    drawer.drawCell(0, i, j, matrix, offsetX, offsetY);
                     return;
                 }
-            } else {
-                if (i < currentCol + matrix.getCols()) {
-                    if (j >= matrix.getRows()) {
-                        drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                        return;
-                    }
-
-                    matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
-                    return;
-                }
+                matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
+                return;
             }
-            currentCol += matrix.getCols();
+            currentCol += matrix.getRows();
         }
     }
 
@@ -124,30 +119,15 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
         boolean isTranspose = i >= getRows();
 
         for (IPrintableMatrix matrix : matrixList) {
-            if (!isTranspose) {
-                if (j < currentCol + matrix.getCols()) {
-
-                    if (i >= matrix.getRows()) {
-                        drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                        return;
-                    }
-
-                    matrix.fillCell(drawer, i, j, value, offsetX, offsetY);
+            if (i < currentCol + matrix.getRows()) {
+                if (j >= matrix.getCols()) {
+                    drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
                     return;
                 }
-            } else {
-                if (i < currentCol + matrix.getCols()) {
-                    if (j >= matrix.getRows()) {
-                        drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                        return;
-                    }
-
-                    matrix.fillCell(drawer, i, j, value, offsetX, offsetY);
-                    return;
-                }
+                matrix.fillCell(drawer, i - currentCol, j, value, offsetX, offsetY + currentCol);
+                return;
             }
-            currentCol += matrix.getCols();
-
+            currentCol += matrix.getRows();
         }
     }
 }

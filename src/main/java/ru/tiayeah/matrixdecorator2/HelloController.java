@@ -3,17 +3,19 @@ package ru.tiayeah.matrixdecorator2;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
-import ru.tiayeah.matrixdecorator2.decorators.AMatrixDecorator;
 import ru.tiayeah.matrixdecorator2.decorators.TransposeDecorator;
+import ru.tiayeah.matrixdecorator2.decorators.VerticalGroupDecorator;
 import ru.tiayeah.matrixdecorator2.drawers.ConsoleDrawer;
 import ru.tiayeah.matrixdecorator2.drawers.GUIDrawer;
-import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
-import ru.tiayeah.matrixdecorator2.interfaces.IPrintable;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 import ru.tiayeah.matrixdecorator2.matrixImpl.HorizontalMatrixGroup;
 import ru.tiayeah.matrixdecorator2.matrixImpl.MatrixInitializer;
 import ru.tiayeah.matrixdecorator2.matrixImpl.OrdinaryMatrix;
 import ru.tiayeah.matrixdecorator2.matrixImpl.SparseMatrix;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class HelloController {
     @FXML
@@ -21,16 +23,18 @@ public class HelloController {
     @FXML
     private AnchorPane AnchorPane;
     private IPrintableMatrix matrix;
-    private AMatrixDecorator decorator;
+    private VerticalGroupDecorator decorator;
+    private List<IPrintableMatrix> matrixList = new ArrayList<>();
     private TransposeDecorator transposeDecorator;
-    private int rowCount = 5, colCount = 5;
+    private int rowCount = 2, colCount = 10;
+    private double k = 0.75;
 
     @FXML
     protected void onDefaultCreateButtonClick() {
         System.out.println();
         AnchorPane.getChildren().clear();
         matrix = new OrdinaryMatrix(rowCount, colCount);
-        MatrixInitializer.fillMatrix(matrix, 15, 10);
+        MatrixInitializer.fillMatrix(matrix, 9, 10);
 
         matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
@@ -50,19 +54,64 @@ public class HelloController {
     @FXML
     protected void onHorizontalGroupClick() {
         System.out.println();
+        matrixList = new ArrayList<>();
         AnchorPane.getChildren().clear();
-        HorizontalMatrixGroup matrix = new HorizontalMatrixGroup();
+        HorizontalMatrixGroup matrixGroup1 = new HorizontalMatrixGroup();
+        HorizontalMatrixGroup matrixGroup2 = new HorizontalMatrixGroup();
+        HorizontalMatrixGroup matrixGroup3 = new HorizontalMatrixGroup();
+        VerticalGroupDecorator verticalGroup = new VerticalGroupDecorator();
 
-        IPrintableMatrix matrix1 = new OrdinaryMatrix(4, 4);
-        MatrixInitializer.fillMatrix(matrix1, 10, 10);
-        IPrintableMatrix matrix2 = new OrdinaryMatrix(3, 3);
-        MatrixInitializer.fillMatrix(matrix2, 5, 10);
+        IPrintableMatrix matrix1, matrix2, matrix3, matrix4, matrix5, matrix6;
 
-        matrix.addMatrix(matrix1);
-        matrix.addMatrix(matrix2);
+        matrix1 = new OrdinaryMatrix(2, 2);
+        MatrixInitializer.fillMatrix(matrix1, (int)(matrix1.getCols() * matrix1.getRows() * k), 10);
 
-        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(),0 ,0);
-        matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, 0);
+        matrix2 = new SparseMatrix(4, 3);
+        MatrixInitializer.fillMatrix(matrix2, (int)(matrix2.getCols() * matrix2.getRows() * k), 10);
+
+        matrix3 = new OrdinaryMatrix(1, 3);
+        MatrixInitializer.fillMatrix(matrix3, (int)(matrix3.getCols() * matrix3.getRows() * k), 10);
+
+        matrix4 = new OrdinaryMatrix(2, 4);
+        MatrixInitializer.fillMatrix(matrix4, (int)(matrix4.getCols() * matrix4.getRows() * k), 10);
+
+        matrix5 = new SparseMatrix(1, 3);
+        MatrixInitializer.fillMatrix(matrix5, (int)(matrix5.getCols() * matrix5.getRows() * k), 10);
+
+        matrix6 = new SparseMatrix(1, 1);
+        MatrixInitializer.fillMatrix(matrix6, (int)(matrix6.getCols() * matrix6.getRows()), 10);
+
+        matrixGroup1.addMatrix(matrix1);
+        matrixGroup1.addMatrix(matrix2);
+        matrixGroup1.addMatrix(matrix3);
+
+        matrixGroup2.addMatrix(matrix4);
+        matrixGroup2.addMatrix(matrix5);
+
+        matrixGroup3.addMatrix(matrix6);
+
+        verticalGroup.addMatrix(matrix1);
+        verticalGroup.addMatrix(matrix2);
+        verticalGroup.addMatrix(matrix3);
+
+        //matrixList.add(matrix1);
+        //matrixList.add(matrix2);
+        //matrixList.add(matrix3);
+        //matrixList.add(matrix4);
+        //matrixList.add(matrix5);
+        //matrixList.add(matrix6);
+        matrixList.add(matrixGroup1);
+        matrixList.add(matrixGroup2);
+        matrixList.add(matrixGroup3);
+
+        //verticalGroup.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
+
+        matrix = matrixGroup1;
+
+        //matrixGroup1.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(),0 ,0);
+        matrixGroup1.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, 0);
+        matrixGroup2.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, matrixGroup1.getRows() + 1);
+        matrixGroup3.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, matrixGroup1.getRows() + matrixGroup2.getRows() + 2);
     }
 
     @FXML
@@ -82,12 +131,12 @@ public class HelloController {
 //            decorator = new RenumberDecorator(matrix);
 //            decorator.renumber();
 //            matrix = decorator;
-            decorator = new TransposeDecorator(matrix);
+            decorator = new VerticalGroupDecorator(matrixList);
             matrix = decorator;
 
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
-            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+           // matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 

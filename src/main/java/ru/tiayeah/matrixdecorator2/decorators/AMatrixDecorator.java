@@ -33,12 +33,12 @@ public abstract class AMatrixDecorator implements IPrintableMatrix {
     }
 
     @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value) {
-        matrix.drawCell(drawer, i, j, value);
+    public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
+        matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
     }
 
     @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value) {
-        matrix.fillCell(drawer, i, j, value);
+    public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
+        matrix.fillCell(drawer, i, j, value, offsetX, offsetY);
     }
 }

@@ -65,8 +65,8 @@ public class RenumberDecorator extends AMatrixDecorator {
         }
         for (int i = 0; i < matrix.getRows(); i++) {
             for (int j = 0; j < matrix.getCols(); j++) {
-                fillCell(drawer, i, j, getValue(i, j));
-                drawCell(drawer, i, j, getValue(i, j));
+                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
             }
         }
         drawer.printResult();
