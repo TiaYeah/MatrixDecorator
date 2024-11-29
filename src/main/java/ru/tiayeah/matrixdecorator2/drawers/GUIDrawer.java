@@ -34,17 +34,17 @@ public class GUIDrawer implements IDrawer {
     }
 
     @Override
-    public void drawBorder(IMatrix matrix) {
+    public void drawBorder(IMatrix matrix, int offsetX, int offsetY) {
         int baseMarginX = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinX() - 10;
         int baseMarginY = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinY() - 10;
 
-        Line topSide = new Line(baseMarginX, baseMarginY, baseMarginX + 30 * matrix.getCols() + 10, baseMarginY);
+        Line topSide = new Line(baseMarginX, baseMarginY + 30 * offsetY, baseMarginX + 30 * matrix.getCols() + 10, baseMarginY + 30 * offsetY);
         topSide.setStrokeWidth(2);
-        Line bottomSide = new Line(baseMarginX, baseMarginY + 30 * matrix.getRows() + 10, baseMarginX + 30 * matrix.getCols() + 10, baseMarginY + 30 * matrix.getRows() + 10);
+        Line bottomSide = new Line(baseMarginX, baseMarginY + 30 * matrix.getRows() + 10 + 30 * offsetY, baseMarginX + 30 * matrix.getCols() + 10, baseMarginY + 30 * matrix.getRows() + 10 + 30 * offsetY);
         bottomSide.setStrokeWidth(2);
-        Line leftSide = new Line(baseMarginX, baseMarginY, baseMarginX, baseMarginY + 30 * matrix.getRows() + 10);
+        Line leftSide = new Line(baseMarginX, baseMarginY + 30 * offsetY, baseMarginX, baseMarginY + 30 * matrix.getRows() + 10 + 30 * offsetY);
         leftSide.setStrokeWidth(2);
-        Line rightSide = new Line(baseMarginX + 30 * matrix.getCols() + 10, baseMarginY, baseMarginX + 30 * matrix.getCols() + 10, baseMarginY + 30 * matrix.getRows() + 10);
+        Line rightSide = new Line(baseMarginX + 30 * matrix.getCols() + 10, baseMarginY + 30 * offsetY, baseMarginX + 30 * matrix.getCols() + 10, baseMarginY + 30 * matrix.getRows() + 10 + 30 * offsetY);
         rightSide.setStrokeWidth(2);
         anchorPane.getChildren().add(topSide);
         anchorPane.getChildren().add(bottomSide);

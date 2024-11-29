@@ -61,7 +61,7 @@ public class RenumberDecorator extends AMatrixDecorator {
     @Override
     public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
         if (showBorder) {
-            drawer.drawBorder(this);
+            drawer.drawBorder(this, offsetX, offsetY);
         }
         for (int i = 0; i < matrix.getRows(); i++) {
             for (int j = 0; j < matrix.getCols(); j++) {

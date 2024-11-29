@@ -63,20 +63,8 @@ public class VerticalGroupDecorator implements IPrintableMatrix {
     @Override
     public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
         if (showBorder) {
-            drawer.drawBorder(this);
+            drawer.drawBorder(this, offsetX, offsetY);
         }
-//        for (int i = 0; i < matrixList.size(); i++) {
-//            if (i != 0) {
-//                matrixOffsetX += matrixList.get(i - 1).getCols();
-//            }
-//            for (int j = 0; j < matrixList.get(i).getRows(); j++) {
-//                for (int k = 0; k < matrixList.get(i).getCols(); k++) {
-//                    matrixList.get(i).fillCell(drawer, j, k, matrixList.get(i).getValue(j, k), matrixOffsetX, offsetY);
-//                    matrixList.get(i).drawCell(drawer, j, k, matrixList.get(i).getValue(j, k), matrixOffsetX, offsetY);
-//                }
-//            }
-//
-//        }
         System.out.println(matrixList.size());
         System.out.println(getRows() + " " + getCols());
 
@@ -98,15 +86,14 @@ public class VerticalGroupDecorator implements IPrintableMatrix {
     @Override
     public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         int currentCol = 0;
-        boolean isTranspose = i >= getRows();
 
         for (IPrintableMatrix matrix : matrixList) {
             if (i < currentCol + matrix.getRows()) {
                 if (j >= matrix.getCols()) {
-                    drawer.drawCell(0, i, j, matrix, offsetX, offsetY);
+                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
                     return;
                 }
-                matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
+                matrix.drawCell(drawer, i - currentCol, j, value, offsetX, offsetY + currentCol);
                 return;
             }
             currentCol += matrix.getRows();
@@ -116,7 +103,6 @@ public class VerticalGroupDecorator implements IPrintableMatrix {
     @Override
     public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         int currentCol = 0;
-        boolean isTranspose = i >= getRows();
 
         for (IPrintableMatrix matrix : matrixList) {
             if (i < currentCol + matrix.getRows()) {

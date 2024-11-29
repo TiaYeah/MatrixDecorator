@@ -57,7 +57,7 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
     @Override
     public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
         if (showBorder) {
-            drawer.drawBorder(this);
+            drawer.drawBorder(this, offsetX, offsetY);
         }
         int matrixOffsetX = offsetX;
 //        for (int i = 0; i < matrixList.size(); i++) {
@@ -91,28 +91,15 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
     @Override
     public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         int currentCol = 0;
-        boolean isTranspose = i >= getRows();
 
         for (IPrintableMatrix matrix : matrixList) {
-            if (!isTranspose) {
-                if (j < currentCol + matrix.getCols()) {
-                    if (i >= matrix.getRows()) {
-                        drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                        return;
-                    }
-                    matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
+            if (j < currentCol + matrix.getCols()) {
+                if (i >= matrix.getRows()) {
+                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
                     return;
                 }
-            } else {
-                if (i < currentCol + matrix.getCols()) {
-                    if (j >= matrix.getRows()) {
-                        drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                        return;
-                    }
-
-                    matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
-                    return;
-                }
+                matrix.drawCell(drawer, i, j - currentCol, value, offsetX + currentCol, offsetY);
+                return;
             }
             currentCol += matrix.getCols();
         }
@@ -121,30 +108,18 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
     @Override
     public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         int currentCol = 0;
-        boolean isTranspose = i >= getRows();
 
         for (IPrintableMatrix matrix : matrixList) {
-            if (!isTranspose) {
-                if (j < currentCol + matrix.getCols()) {
+            if (j < currentCol + matrix.getCols()) {
 
-                    if (i >= matrix.getRows()) {
-                        drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                        return;
-                    }
-
-                    matrix.fillCell(drawer, i, j, value, offsetX, offsetY);
+                if (i >= matrix.getRows()) {
+                    drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
                     return;
                 }
-            } else {
-                if (i < currentCol + matrix.getCols()) {
-                    if (j >= matrix.getRows()) {
-                        drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                        return;
-                    }
 
-                    matrix.fillCell(drawer, i, j, value, offsetX, offsetY);
-                    return;
-                }
+                matrix.fillCell(drawer, i, j - currentCol, value, offsetX + currentCol, offsetY);
+                return;
+
             }
             currentCol += matrix.getCols();
 

@@ -77,7 +77,7 @@ public abstract class AbstractMatrix implements IPrintableMatrix {
     @Override
     public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
         if (showBorder) {
-            drawer.drawBorder(this);
+            drawer.drawBorder(this, offsetX, offsetY);
         }
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < colCount; j++) {

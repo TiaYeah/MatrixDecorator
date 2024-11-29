@@ -89,6 +89,7 @@ public class HelloController {
         matrixGroup2.addMatrix(matrix5);
 
         matrixGroup3.addMatrix(matrix6);
+        //matrixGroup3.addMatrix(matrixGroup2);
 
         verticalGroup.addMatrix(matrix1);
         verticalGroup.addMatrix(matrix2);
@@ -123,6 +124,23 @@ public class HelloController {
             matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
+
+    @FXML
+    protected void createVerticalGroup() {
+        AnchorPane.getChildren().clear();
+        if (matrix != null) {
+//            decorator = new RenumberDecorator(matrix);
+//            decorator.renumber();
+//            matrix = decorator;
+            decorator = new VerticalGroupDecorator(matrixList);
+            matrix = decorator;
+
+            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
+            System.out.println();
+            // matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+        }
+    }
+
 
     @FXML
     protected void renumber() {

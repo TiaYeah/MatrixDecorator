@@ -32,7 +32,7 @@ public class TransposeDecorator extends AMatrixDecorator {
     @Override
     public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
         if (showBorder) {
-            drawer.drawBorder(this);
+            drawer.drawBorder(this, offsetX, offsetY);
         }
 
 

@@ -47,7 +47,7 @@ public class ConsoleDrawer implements IDrawer {
     }
 
     @Override
-    public void drawBorder(IMatrix matrix) {
+    public void drawBorder(IMatrix matrix, int offsetX, int offsetY) {
         drawBorder = true;
         matrixToPrint = new ArrayList<>();
         for (int i = 0; i < matrix.getRows() * 2 + 1; i++) {
