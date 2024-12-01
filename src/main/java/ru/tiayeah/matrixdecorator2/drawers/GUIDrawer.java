@@ -61,5 +61,12 @@ public class GUIDrawer implements IDrawer {
         anchorPane.getChildren().add(rect);
     }
 
-
+    @Override
+    public void drawCell(int value, int y, int x, int offsetX, int offsetY) {
+        int baseMarginX = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinX();
+        int baseMarginY = (int) anchorPane.localToScene(anchorPane.getBoundsInLocal()).getMinY() + 20;
+        Text text = new Text(baseMarginX + 30 * offsetX + 30 * x, baseMarginY + 30 * offsetY + 30 * y, Integer.toString(value));
+        text.setFont(new Font(25));
+        anchorPane.getChildren().add(text);
+    }
 }

@@ -2,6 +2,7 @@ package ru.tiayeah.matrixdecorator2.decorators;
 
 import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
+import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
 
 public class TransposeDecorator extends AMatrixDecorator {
 
@@ -29,19 +30,12 @@ public class TransposeDecorator extends AMatrixDecorator {
         matrix.setValue(col, row, value);
     }
 
+
+
     @Override
-    public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
-        if (showBorder) {
-            drawer.drawBorder(this, offsetX, offsetY);
-        }
-
-
-        for (int i = 0; i < getRows(); i++) {
-            for (int j = 0; j < getCols(); j++) {
-                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-            }
-        }
-        drawer.printResult();
+    public Cell getCell(int row, int col) {
+        return matrix.getCell(col, row);
     }
+
+
 }

@@ -2,6 +2,7 @@ package ru.tiayeah.matrixdecorator2.decorators;
 
 import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
+import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
 
 import java.util.Random;
 
@@ -18,8 +19,12 @@ public class RenumberDecorator extends AMatrixDecorator {
         rowIndex = new int[matrix.getRows()];
         colIndex = new int[matrix.getCols()];
 
-        for (int i = 0; i < matrix.getRows(); i++) { rowIndex[i] = i; }
-        for (int i = 0; i < matrix.getCols(); i++) { colIndex[i] = i; }
+        for (int i = 0; i < matrix.getRows(); i++) {
+            rowIndex[i] = i;
+        }
+        for (int i = 0; i < matrix.getCols(); i++) {
+            colIndex[i] = i;
+        }
     }
 
     public void renumber() {
@@ -58,18 +63,13 @@ public class RenumberDecorator extends AMatrixDecorator {
         matrix.setValue(rowIndex[row], colIndex[col], value);
     }
 
+
+
+
+
     @Override
-    public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
-        if (showBorder) {
-            drawer.drawBorder(this, offsetX, offsetY);
-        }
-        for (int i = 0; i < matrix.getRows(); i++) {
-            for (int j = 0; j < matrix.getCols(); j++) {
-                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-            }
-        }
-        drawer.printResult();
+    public Cell getCell(int row, int col) {
+        return matrix.getCell(rowIndex[row], colIndex[col]);
     }
 
     public void print() {

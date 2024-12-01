@@ -7,4 +7,5 @@ public interface IDrawer {
     void printResult();
     void drawBorder(IMatrix matrix, int offsetX, int offsetY);
     void fillCell(int i, int j, Colors color, int offsetX, int offsetY);
+    void drawCell(int value, int i, int j, int offsetX, int offsetY);
 }

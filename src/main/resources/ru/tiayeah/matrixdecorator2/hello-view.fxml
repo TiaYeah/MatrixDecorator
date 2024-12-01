@@ -5,14 +5,16 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.tiayeah.matrixdecorator2.HelloController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.tiayeah.matrixdecorator2.HelloController">
     <children>
         <Button fx:id="DefaultCreateButton" layoutX="386.0" layoutY="22.0" mnemonicParsing="false" onMouseClicked="#onDefaultCreateButtonClick" prefHeight="42.0" prefWidth="158.0" text="Генерация обычной матрицы" textAlignment="CENTER" wrapText="true" />
         <Button fx:id="SparseCreateButton" layoutX="386.0" layoutY="77.0" mnemonicParsing="false" onMouseClicked="#onSparseCreateMatrixClick" prefHeight="42.0" prefWidth="158.0" text="Генерация разреженной матрицы" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
         <CheckBox fx:id="BorderCheckbox" layoutX="386.0" layoutY="200.0" mnemonicParsing="false" onMouseClicked="#onCheckBoxClick" text="Отображение границы матрицы" />
       <AnchorPane fx:id="AnchorPane" layoutX="21.0" layoutY="22.0" prefHeight="325.0" prefWidth="348.0" style="-fx-background-color: lightgray;" />
-      <Button fx:id="RefreshButton" layoutX="386.0" layoutY="278.0" mnemonicParsing="false" onMouseClicked="#refresh" prefHeight="42.0" prefWidth="158.0" text="Восстановить" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
-      <Button fx:id="RenumberButton" layoutX="386.0" layoutY="223.0" mnemonicParsing="false" onMouseClicked="#createVerticalGroup" prefHeight="42.0" prefWidth="158.0" text="Создать вертикальную группу" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="RefreshButton" layoutX="386.0" layoutY="284.0" mnemonicParsing="false" onMouseClicked="#refresh" prefHeight="42.0" prefWidth="158.0" text="Восстановить" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="VerticalGroupButton" layoutX="553.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#createVerticalGroup" prefHeight="42.0" prefWidth="158.0" text="Создать вертикальную группу" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
       <Button fx:id="SparseCreateButton1" layoutX="386.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#onHorizontalGroupClick" prefHeight="42.0" prefWidth="158.0" text="Создание горизонтальной группы" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="RenumberButton" layoutX="386.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#renumber" prefHeight="42.0" prefWidth="158.0" text="Перенумеровать" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="TransposeButton" layoutX="553.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#transpose" prefHeight="42.0" prefWidth="158.0" text="Транспонировать" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
     </children>
 </Pane>

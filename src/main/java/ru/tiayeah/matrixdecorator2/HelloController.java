@@ -3,6 +3,8 @@ package ru.tiayeah.matrixdecorator2;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.layout.AnchorPane;
+import ru.tiayeah.matrixdecorator2.decorators.AMatrixDecorator;
+import ru.tiayeah.matrixdecorator2.decorators.RenumberDecorator;
 import ru.tiayeah.matrixdecorator2.decorators.TransposeDecorator;
 import ru.tiayeah.matrixdecorator2.decorators.VerticalGroupDecorator;
 import ru.tiayeah.matrixdecorator2.drawers.ConsoleDrawer;
@@ -14,7 +16,6 @@ import ru.tiayeah.matrixdecorator2.matrixImpl.OrdinaryMatrix;
 import ru.tiayeah.matrixdecorator2.matrixImpl.SparseMatrix;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class HelloController {
@@ -23,10 +24,12 @@ public class HelloController {
     @FXML
     private AnchorPane AnchorPane;
     private IPrintableMatrix matrix;
-    private VerticalGroupDecorator decorator;
+    private VerticalGroupDecorator verticalGroupDecorator;
     private List<IPrintableMatrix> matrixList = new ArrayList<>();
     private TransposeDecorator transposeDecorator;
-    private int rowCount = 2, colCount = 10;
+    private RenumberDecorator renumberDecorator;
+    private AMatrixDecorator decorator;
+    private int rowCount = 2, colCount = 3;
     private double k = 0.75;
 
     @FXML
@@ -34,9 +37,9 @@ public class HelloController {
         System.out.println();
         AnchorPane.getChildren().clear();
         matrix = new OrdinaryMatrix(rowCount, colCount);
-        MatrixInitializer.fillMatrix(matrix, 9, 10);
+        MatrixInitializer.fillMatrix(matrix, (int)(colCount * rowCount * k), 10);
 
-        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+        //matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
     }
 
@@ -45,9 +48,9 @@ public class HelloController {
         System.out.println();
         AnchorPane.getChildren().clear();
         matrix = new SparseMatrix(rowCount, colCount);
-        MatrixInitializer.fillMatrix(matrix, 15, 10);
+        MatrixInitializer.fillMatrix(matrix, (int)(colCount * rowCount * k), 10);
 
-        matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+        //matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
     }
 
@@ -129,11 +132,11 @@ public class HelloController {
     protected void createVerticalGroup() {
         AnchorPane.getChildren().clear();
         if (matrix != null) {
-//            decorator = new RenumberDecorator(matrix);
-//            decorator.renumber();
-//            matrix = decorator;
-            decorator = new VerticalGroupDecorator(matrixList);
-            matrix = decorator;
+//            verticalGroupDecorator = new RenumberDecorator(matrix);
+//            verticalGroupDecorator.renumber();
+//            matrix = verticalGroupDecorator;
+            verticalGroupDecorator = new VerticalGroupDecorator(matrixList);
+            matrix = verticalGroupDecorator;
 
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
@@ -146,15 +149,29 @@ public class HelloController {
     protected void renumber() {
         AnchorPane.getChildren().clear();
         if (matrix != null) {
-//            decorator = new RenumberDecorator(matrix);
-//            decorator.renumber();
-//            matrix = decorator;
-            decorator = new VerticalGroupDecorator(matrixList);
+//            renumberDecorator = new RenumberDecorator(matrix);
+//            renumberDecorator.renumber();
+//            matrix = renumberDecorator;
+            RenumberDecorator reDecorator = new RenumberDecorator(matrix);
+            reDecorator.renumber();
+            decorator = reDecorator;
+            matrix = decorator;
+
+
+            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
+            System.out.println();
+        }
+    }
+
+    @FXML
+    protected void transpose() {
+        AnchorPane.getChildren().clear();
+        if (matrix != null) {
+            decorator = new TransposeDecorator(matrix);
             matrix = decorator;
 
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
-           // matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 
@@ -167,7 +184,7 @@ public class HelloController {
         if (matrix != null) {
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
-            matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+            //matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 }

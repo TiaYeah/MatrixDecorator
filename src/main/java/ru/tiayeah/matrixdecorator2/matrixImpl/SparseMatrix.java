@@ -33,8 +33,15 @@ public class SparseMatrix extends AbstractMatrix {
 
     @Override
     public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        if (value!= 0) {
+        if (value != 0) {
             drawer.fillCell(i, j, color, offsetX, offsetY);
+        }
+    }
+
+    @Override
+    public void letCellDraw(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
+        if (value!= 0) {
+            rows[i].getCell(j).drawYourself(drawer, i,  j, value, offsetX, offsetY);
         }
     }
 }

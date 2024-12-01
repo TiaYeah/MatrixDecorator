@@ -72,5 +72,10 @@ public class ConsoleDrawer implements IDrawer {
 
     }
 
+    @Override
+    public void drawCell(int value, int i, int j, int offsetX, int offsetY) {
+
+    }
+
 
 }

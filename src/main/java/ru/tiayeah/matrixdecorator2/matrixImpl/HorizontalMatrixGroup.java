@@ -4,6 +4,7 @@ import ru.tiayeah.matrixdecorator2.Colors;
 import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
 import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
+import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,8 +76,9 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
 
         for (int i = 0; i < getRows(); i++) {
             for (int j = 0; j < getCols(); j++) {
-                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+//                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+//                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+                letCellDraw(drawer, i, j, getValue(i, j), offsetX, offsetY);
             }
         }
 
@@ -86,6 +88,23 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
     @Override
     public IMatrix getComponent() {
         return this;
+    }
+
+    @Override
+    public Cell getCell(int row, int col) {
+        int currentCol = 0;
+        for (IPrintableMatrix matrix : matrixList) {
+            if (col < currentCol + matrix.getCols()) {
+                if (row >= matrix.getRows()) {
+                    Cell zeroCell = new Cell(col - currentCol, 0, Colors.AQUA);
+                    zeroCell.setI(row);
+                    return zeroCell;
+                }
+                return matrix.getCell(row, col - currentCol);
+            }
+            currentCol += matrix.getCols();
+        }
+        throw new IndexOutOfBoundsException("Индекс выходит за пределы матрицы");
     }
 
     @Override
@@ -113,11 +132,35 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
             if (j < currentCol + matrix.getCols()) {
 
                 if (i >= matrix.getRows()) {
+                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
                     drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
                     return;
                 }
 
                 matrix.fillCell(drawer, i, j - currentCol, value, offsetX + currentCol, offsetY);
+                return;
+
+            }
+            currentCol += matrix.getCols();
+
+        }
+    }
+
+    @Override
+    public void letCellDraw(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
+        int currentCol = 0;
+
+        for (IPrintableMatrix matrix : matrixList) {
+            if (j < currentCol + matrix.getCols()) {
+
+                if (i >= matrix.getRows()) {
+//                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
+//                    drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
+                    getCell(i, j).drawYourself(drawer, i, j, value, offsetX, offsetY);
+                    return;
+                }
+
+                matrix.letCellDraw(drawer, i, j - currentCol, value, offsetX + currentCol, offsetY);
                 return;
 
             }

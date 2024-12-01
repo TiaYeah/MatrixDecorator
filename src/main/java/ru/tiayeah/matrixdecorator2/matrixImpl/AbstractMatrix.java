@@ -5,6 +5,7 @@ import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
 import ru.tiayeah.matrixdecorator2.interfaces.IMatrix;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 import ru.tiayeah.matrixdecorator2.interfaces.IVector;
+import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
 
 import java.util.Arrays;
 
@@ -21,7 +22,16 @@ public abstract class AbstractMatrix implements IPrintableMatrix {
         for( int i = 0; i < rowCount; i++) {
             rows[i] = createVector(colCount);
         }
+
+        for (int i = 0; i < rowCount; i++) {
+            for (int j = 0; j < colCount; j++) {
+                if (rows[i].getCell(j) != null) {
+                    rows[i].getCell(j).setI(i);
+                }
+            }
+        }
     }
+
 
     public AbstractMatrix(IMatrix matrix) {
         this.rowCount = matrix.getRows();
@@ -52,6 +62,7 @@ public abstract class AbstractMatrix implements IPrintableMatrix {
     @Override
     public void setValue(int row, int col, int value) {
         rows[row].setValue(col, value);
+        rows[row].getCell(col).setI(row);
     }
 
     @Override
@@ -81,10 +92,18 @@ public abstract class AbstractMatrix implements IPrintableMatrix {
         }
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < colCount; j++) {
-                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+                //fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+                //drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
+                //rows[i].getCell(j).drawYourself(drawer, offsetX, offsetY);
+                letCellDraw(drawer, i, j, getValue(i, j),offsetX, offsetY);
             }
         }
-        drawer.printResult();
+        //drawer.printResult();
+    }
+
+
+    @Override
+    public Cell getCell(int row, int col) {
+        return rows[row].getCell(col);
     }
 }

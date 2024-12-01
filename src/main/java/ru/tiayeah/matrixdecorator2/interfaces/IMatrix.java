@@ -1,5 +1,7 @@
 package ru.tiayeah.matrixdecorator2.interfaces;
 
+import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
+
 public interface IMatrix {
     int getRows();
 
@@ -12,4 +14,6 @@ public interface IMatrix {
     void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY);
 
     IMatrix getComponent();
+
+    Cell getCell(int row, int col);
 }
