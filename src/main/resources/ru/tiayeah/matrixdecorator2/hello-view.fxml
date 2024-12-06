@@ -16,5 +16,6 @@
       <Button fx:id="SparseCreateButton1" layoutX="386.0" layoutY="132.0" mnemonicParsing="false" onMouseClicked="#onHorizontalGroupClick" prefHeight="42.0" prefWidth="158.0" text="Создание горизонтальной группы" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
       <Button fx:id="RenumberButton" layoutX="386.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#renumber" prefHeight="42.0" prefWidth="158.0" text="Перенумеровать" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
       <Button fx:id="TransposeButton" layoutX="553.0" layoutY="229.0" mnemonicParsing="false" onMouseClicked="#transpose" prefHeight="42.0" prefWidth="158.0" text="Транспонировать" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+      <Button fx:id="ColorizeButton" layoutX="553.0" layoutY="284.0" mnemonicParsing="false" onMouseClicked="#colorize" prefHeight="42.0" prefWidth="158.0" text="Раскрасить матрицу" textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
     </children>
 </Pane>

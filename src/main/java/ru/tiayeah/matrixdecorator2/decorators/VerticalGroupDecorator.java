@@ -66,12 +66,9 @@ public class VerticalGroupDecorator implements IPrintableMatrix {
         if (showBorder) {
             drawer.drawBorder(this, offsetX, offsetY);
         }
-        int matrixOffsetX = offsetX;
 
         for (int i = 0; i < getRows(); i++) {
             for (int j = 0; j < getCols(); j++) {
-//                fillCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
-//                drawCell(drawer, i, j, getValue(i, j), offsetX, offsetY);
                 letCellDraw(drawer, i, j, getValue(i, j), offsetX, offsetY);
             }
         }
@@ -102,39 +99,7 @@ public class VerticalGroupDecorator implements IPrintableMatrix {
         throw new IndexOutOfBoundsException("Индекс выходит за пределы матрицы");
     }
 
-    @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        int currentCol = 0;
 
-        for (IPrintableMatrix matrix : matrixList) {
-            if (i < currentCol + matrix.getRows()) {
-                if (j >= matrix.getCols()) {
-                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                    return;
-                }
-                matrix.drawCell(drawer, i - currentCol, j, value, offsetX, offsetY + currentCol);
-                return;
-            }
-            currentCol += matrix.getRows();
-        }
-    }
-
-    @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        int currentCol = 0;
-
-        for (IPrintableMatrix matrix : matrixList) {
-            if (i < currentCol + matrix.getRows()) {
-                if (j >= matrix.getCols()) {
-                    drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                    return;
-                }
-                matrix.fillCell(drawer, i - currentCol, j, value, offsetX, offsetY + currentCol);
-                return;
-            }
-            currentCol += matrix.getRows();
-        }
-    }
 
     @Override
     public void letCellDraw(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
@@ -144,7 +109,7 @@ public class VerticalGroupDecorator implements IPrintableMatrix {
             if (i < currentCol + matrix.getRows()) {
 
                 if (j >= matrix.getCols()) {
-                    getCell(i, j).drawYourself(drawer, i, j, value, offsetX, offsetY);
+                    getCell(i, j).drawYourself(drawer, i, j, offsetX, offsetY);
                     return;
                 }
 

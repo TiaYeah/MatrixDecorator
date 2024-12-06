@@ -26,10 +26,8 @@ public class HelloController {
     private IPrintableMatrix matrix;
     private VerticalGroupDecorator verticalGroupDecorator;
     private List<IPrintableMatrix> matrixList = new ArrayList<>();
-    private TransposeDecorator transposeDecorator;
-    private RenumberDecorator renumberDecorator;
     private AMatrixDecorator decorator;
-    private int rowCount = 2, colCount = 3;
+    private int rowCount = 3, colCount = 10;
     private double k = 0.75;
 
     @FXML
@@ -37,7 +35,7 @@ public class HelloController {
         System.out.println();
         AnchorPane.getChildren().clear();
         matrix = new OrdinaryMatrix(rowCount, colCount);
-        MatrixInitializer.fillMatrix(matrix, (int)(colCount * rowCount * k), 10);
+        MatrixInitializer.fillMatrix(matrix, (int) (colCount * rowCount * k), 10);
 
         //matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
@@ -48,7 +46,7 @@ public class HelloController {
         System.out.println();
         AnchorPane.getChildren().clear();
         matrix = new SparseMatrix(rowCount, colCount);
-        MatrixInitializer.fillMatrix(matrix, (int)(colCount * rowCount * k), 10);
+        MatrixInitializer.fillMatrix(matrix, (int) (colCount * rowCount * k), 10);
 
         //matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
         matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
@@ -67,22 +65,22 @@ public class HelloController {
         IPrintableMatrix matrix1, matrix2, matrix3, matrix4, matrix5, matrix6;
 
         matrix1 = new OrdinaryMatrix(2, 2);
-        MatrixInitializer.fillMatrix(matrix1, (int)(matrix1.getCols() * matrix1.getRows() * k), 10);
+        MatrixInitializer.fillMatrix(matrix1, (int) (matrix1.getCols() * matrix1.getRows() * k), 10);
 
         matrix2 = new SparseMatrix(4, 3);
-        MatrixInitializer.fillMatrix(matrix2, (int)(matrix2.getCols() * matrix2.getRows() * k), 10);
+        MatrixInitializer.fillMatrix(matrix2, (int) (matrix2.getCols() * matrix2.getRows() * k), 10);
 
         matrix3 = new OrdinaryMatrix(1, 3);
-        MatrixInitializer.fillMatrix(matrix3, (int)(matrix3.getCols() * matrix3.getRows() * k), 10);
+        MatrixInitializer.fillMatrix(matrix3, (int) (matrix3.getCols() * matrix3.getRows() * k), 10);
 
         matrix4 = new OrdinaryMatrix(2, 4);
-        MatrixInitializer.fillMatrix(matrix4, (int)(matrix4.getCols() * matrix4.getRows() * k), 10);
+        MatrixInitializer.fillMatrix(matrix4, (int) (matrix4.getCols() * matrix4.getRows() * k), 10);
 
         matrix5 = new SparseMatrix(1, 3);
-        MatrixInitializer.fillMatrix(matrix5, (int)(matrix5.getCols() * matrix5.getRows() * k), 10);
+        MatrixInitializer.fillMatrix(matrix5, (int) (matrix5.getCols() * matrix5.getRows() * k), 10);
 
         matrix6 = new SparseMatrix(1, 1);
-        MatrixInitializer.fillMatrix(matrix6, (int)(matrix6.getCols() * matrix6.getRows()), 10);
+        MatrixInitializer.fillMatrix(matrix6, (int) (matrix6.getCols() * matrix6.getRows()), 10);
 
         matrixGroup1.addMatrix(matrix1);
         matrixGroup1.addMatrix(matrix2);
@@ -113,9 +111,9 @@ public class HelloController {
         matrix = matrixGroup1;
 
         //matrixGroup1.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(),0 ,0);
-        matrixGroup1.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, 0);
-        matrixGroup2.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, matrixGroup1.getRows() + 1);
-        matrixGroup3.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(),0, matrixGroup1.getRows() + matrixGroup2.getRows() + 2);
+        matrixGroup1.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
+        matrixGroup2.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, matrixGroup1.getRows() + 1);
+        matrixGroup3.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, matrixGroup1.getRows() + matrixGroup2.getRows() + 2);
     }
 
     @FXML
@@ -179,12 +177,24 @@ public class HelloController {
     protected void refresh() {
         AnchorPane.getChildren().clear();
 
-        matrix = (IPrintableMatrix) decorator.getComponent();
+        if (decorator != null) {
+            matrix = (IPrintableMatrix) decorator.getComponent();
+        }
 
         if (matrix != null) {
             matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
             System.out.println();
             //matrix.draw(new ConsoleDrawer(), BorderCheckbox.isSelected(), 0, 0);
+        }
+    }
+
+    @FXML
+    protected void colorize() {
+        AnchorPane.getChildren().clear();
+        MatrixInitializer.colorizeMatrix(matrix);
+
+        if (matrix != null) {
+            matrix.draw(new GUIDrawer(AnchorPane), BorderCheckbox.isSelected(), 0, 0);
         }
     }
 }

@@ -1,6 +1,7 @@
 module ru.tiayeah.matrixdecorator2 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens ru.tiayeah.matrixdecorator2 to javafx.fxml;

@@ -16,4 +16,5 @@ public interface IMatrix {
     IMatrix getComponent();
 
     Cell getCell(int row, int col);
+
 }

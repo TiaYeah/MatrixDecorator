@@ -1,6 +1,5 @@
 package ru.tiayeah.matrixdecorator2.decorators;
 
-import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
 
@@ -30,12 +29,9 @@ public class TransposeDecorator extends AMatrixDecorator {
         matrix.setValue(col, row, value);
     }
 
-
-
     @Override
     public Cell getCell(int row, int col) {
         return matrix.getCell(col, row);
     }
-
 
 }

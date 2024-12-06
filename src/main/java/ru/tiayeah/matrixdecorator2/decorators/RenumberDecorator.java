@@ -1,6 +1,5 @@
 package ru.tiayeah.matrixdecorator2.decorators;
 
-import ru.tiayeah.matrixdecorator2.interfaces.IDrawer;
 import ru.tiayeah.matrixdecorator2.interfaces.IPrintableMatrix;
 import ru.tiayeah.matrixdecorator2.vectorImpl.Cell;
 
@@ -63,22 +62,9 @@ public class RenumberDecorator extends AMatrixDecorator {
         matrix.setValue(rowIndex[row], colIndex[col], value);
     }
 
-
-
-
-
     @Override
     public Cell getCell(int row, int col) {
         return matrix.getCell(rowIndex[row], colIndex[col]);
-    }
-
-    public void print() {
-        for (int i = 0; i < matrix.getRows(); i++) {
-            for (int j = 0; j < matrix.getCols(); j++) {
-                System.out.print(matrix.getValue(i, j) + " ");
-            }
-            System.out.println();
-        }
     }
 
 }

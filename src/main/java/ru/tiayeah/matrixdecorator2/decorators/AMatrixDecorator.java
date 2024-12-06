@@ -32,15 +32,6 @@ public abstract class AMatrixDecorator implements IPrintableMatrix {
         return matrix.getComponent();
     }
 
-    @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        matrix.drawCell(drawer, i, j, value, offsetX, offsetY);
-    }
-
-    @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        matrix.fillCell(drawer, i, j, value, offsetX, offsetY);
-    }
 
     @Override
     public void draw(IDrawer drawer, boolean showBorder, int offsetX, int offsetY) {
@@ -50,10 +41,6 @@ public abstract class AMatrixDecorator implements IPrintableMatrix {
         for (int i = 0; i < getRows(); i++) {
             for (int j = 0; j < getCols(); j++) {
                 letCellDraw(drawer, i, j, getValue(i, j), offsetX, offsetY);
-
-                // matrix.letCellDraw(drawer, i, j, getValue(rowIndex[i], colIndex[j]), offsetX + colIndex[j] - j, offsetY + rowIndex[i] - i);
-
-                //matrix.letCellDraw(drawer, rowIndex[i], colIndex[j], getValue(i, j), offsetX, offsetY);
             }
         }
         drawer.printResult();
@@ -62,7 +49,7 @@ public abstract class AMatrixDecorator implements IPrintableMatrix {
     @Override
     public void letCellDraw(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
         if (getCell(i, j) != null) {
-            getCell(i, j).drawYourself(drawer, i, j, getValue(i, j), offsetX, offsetY);
+            getCell(i, j).drawYourself(drawer, i, j, offsetX, offsetY);
         }
     }
 }

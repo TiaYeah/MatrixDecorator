@@ -107,44 +107,6 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
         throw new IndexOutOfBoundsException("Индекс выходит за пределы матрицы");
     }
 
-    @Override
-    public void drawCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        int currentCol = 0;
-
-        for (IPrintableMatrix matrix : matrixList) {
-            if (j < currentCol + matrix.getCols()) {
-                if (i >= matrix.getRows()) {
-                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                    return;
-                }
-                matrix.drawCell(drawer, i, j - currentCol, value, offsetX + currentCol, offsetY);
-                return;
-            }
-            currentCol += matrix.getCols();
-        }
-    }
-
-    @Override
-    public void fillCell(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
-        int currentCol = 0;
-
-        for (IPrintableMatrix matrix : matrixList) {
-            if (j < currentCol + matrix.getCols()) {
-
-                if (i >= matrix.getRows()) {
-                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
-                    drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                    return;
-                }
-
-                matrix.fillCell(drawer, i, j - currentCol, value, offsetX + currentCol, offsetY);
-                return;
-
-            }
-            currentCol += matrix.getCols();
-
-        }
-    }
 
     @Override
     public void letCellDraw(IDrawer drawer, int i, int j, int value, int offsetX, int offsetY) {
@@ -156,7 +118,7 @@ public class HorizontalMatrixGroup implements IPrintableMatrix {
                 if (i >= matrix.getRows()) {
 //                    drawer.drawCell(value, i, j, matrix, offsetX, offsetY);
 //                    drawer.fillCell(i, j, Colors.AQUA, offsetX, offsetY);
-                    getCell(i, j).drawYourself(drawer, i, j, value, offsetX, offsetY);
+                    getCell(i, j).drawYourself(drawer, i, j, offsetX, offsetY);
                     return;
                 }
 

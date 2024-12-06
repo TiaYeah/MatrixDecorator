@@ -4,7 +4,6 @@ import ru.tiayeah.matrixdecorator2.Colors;
 import ru.tiayeah.matrixdecorator2.interfaces.IVector;
 
 import java.util.Arrays;
-import java.util.Iterator;
 
 public class OrdinaryVector implements IVector {
     private Cell[] data;

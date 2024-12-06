@@ -106,4 +106,5 @@ public abstract class AbstractMatrix implements IPrintableMatrix {
     public Cell getCell(int row, int col) {
         return rows[row].getCell(col);
     }
+
 }
